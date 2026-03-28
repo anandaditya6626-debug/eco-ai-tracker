@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Eco AI Tracker – Understand the environmental impact of your AI prompts. Track water, energy, and CO₂ usage.">
+  <title>Eco AI Tracker — Track Your AI's Environmental Impact</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌿</text></svg>">
+</head>
+<body>
+
+  <!-- Particle Background -->
+  <canvas id="particles-canvas"></canvas>
+  <div class="bg-gradient"></div>
+
+  <!-- Navigation -->
+  <nav class="navbar" id="navbar">
+    <a href="#" class="nav-logo">
+      <svg viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="14" stroke="#00ff88" stroke-width="2"/><path d="M16 8c0 8-6 12-6 16h12c0-4-6-8-6-16z" fill="#00ff88" opacity="0.7"/><path d="M13 24c1-3 3-5 3-9 0 4 2 6 3 9" stroke="#050a0e" stroke-width="1.5"/></svg>
+      Eco AI Tracker
+    </a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="#hero">Home</a></li>
+      <li><a href="#analyzer">Analyzer</a></li>
+      <li><a href="#impact">About Impact</a></li>
+      <li><a href="#stats" class="nav-cta">Stats</a></li>
+    </ul>
+    <button class="mobile-toggle" id="mobile-toggle">☰</button>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero" id="hero">
+    <div class="hero-content">
+      <div class="hero-badge"><span class="dot"></span> AI Environmental Intelligence</div>
+      <h1>Track Your AI's Environmental Impact</h1>
+      <p>Every AI prompt consumes water for cooling, electricity for processing, and generates CO₂ emissions. Understand your footprint and learn to optimize.</p>
+      <div class="hero-stats">
+        <div class="hero-stat"><div class="num">500ml</div><div class="label">Water per AI session</div></div>
+        <div class="hero-stat"><div class="num">4.2Wh</div><div class="label">Energy per query</div></div>
+        <div class="hero-stat"><div class="num">8.4g</div><div class="label">CO₂ per interaction</div></div>
+      </div>
+    </div>
+    <div class="scroll-indicator">
+      <span>Scroll to explore</span>
+      <svg width="16" height="24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="1" width="10" height="18" rx="5"/><line x1="8" y1="5" x2="8" y2="9"/></svg>
+    </div>
+  </section>
+
+  <!-- Analyzer Section -->
+  <section class="analyzer" id="analyzer">
+    <div class="section-header fade-in">
+      <div class="section-tag">Prompt Analyzer</div>
+      <h2>Analyze Your Prompt's Footprint</h2>
+      <p>Paste your AI prompt below and discover its environmental cost — plus get an optimized version.</p>
+    </div>
+
+    <div class="analyzer-grid">
+      <!-- Input Panel -->
+      <div class="glass-card input-panel fade-in">
+        <h3>📝 Your Prompt</h3>
+        <textarea id="prompt-input" placeholder="Type or paste your AI prompt here...&#10;&#10;Example: Can you please help me write a very detailed and comprehensive essay about the environmental impact of artificial intelligence on our planet?"></textarea>
+        <div class="char-count" id="char-count">0 chars · 0 words</div>
+        <button class="analyze-btn" id="analyze-btn">
+          <span class="btn-shimmer"></span>
+          ⚡ Analyze Impact
+        </button>
+      </div>
+
+      <!-- Results Panel -->
+      <div class="glass-card results-panel fade-in">
+        <div id="results-placeholder" class="results-placeholder">
+          <svg width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.2" viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2Zm0 14v-4m0-4h.01"/></svg>
+          <p>Enter a prompt and click<br><strong>Analyze Impact</strong> to see results</p>
+        </div>
+
+        <div id="results">
+          <!-- Eco Score + Meta -->
+          <div class="result-header">
+            <div class="eco-score-ring">
+              <svg width="80" height="80" viewBox="0 0 80 80">
+                <circle cx="40" cy="40" r="33" fill="none" stroke="rgba(0,255,136,0.1)" stroke-width="6"/>
+                <circle id="score-circle" cx="40" cy="40" r="33" fill="none" stroke="#00ff88" stroke-width="6" stroke-linecap="round" stroke-dasharray="207.3" stroke-dashoffset="207.3" style="transition: stroke-dashoffset 1s ease;"/>
+              </svg>
+              <div class="score-text">
+                <span class="score-val" id="score-value">0</span>
+                <span class="score-label">ECO SCORE</span>
+              </div>
+            </div>
+            <div class="result-meta">
+              <div class="word-count">Original: <span id="word-count">0</span> words</div>
+              <div class="word-count">Optimized: <span id="opt-word-count">0</span> words</div>
+            </div>
+          </div>
+
+          <!-- Metrics -->
+          <div class="metrics-grid">
+            <div class="metric-card">
+              <div class="metric-icon">💧</div>
+              <div class="metric-val" id="water-val">0 ml</div>
+              <div class="metric-label">Water Usage</div>
+            </div>
+            <div class="metric-card">
+              <div class="metric-icon">⚡</div>
+              <div class="metric-val" id="energy-val">0 Wh</div>
+              <div class="metric-label">Energy Usage</div>
+            </div>
+            <div class="metric-card">
+              <div class="metric-icon">🌫️</div>
+              <div class="metric-val" id="co2-val">0 g</div>
+              <div class="metric-label">CO₂ Emissions</div>
+            </div>
+          </div>
+
+          <!-- Savings -->
+          <div class="savings-section">
+            <h4>✅ Savings After Optimization</h4>
+            <div class="savings-grid">
+              <div class="saving-item">
+                <div class="saved-val" id="saved-water">0 ml</div>
+                <div class="saved-label">Water Saved</div>
+              </div>
+              <div class="saving-item">
+                <div class="saved-val" id="saved-energy">0 Wh</div>
+                <div class="saved-label">Energy Saved</div>
+              </div>
+              <div class="saving-item">
+                <div class="saved-val" id="saved-co2">0 g</div>
+                <div class="saved-label">CO₂ Reduced</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Optimized Prompt -->
+          <div class="optimized-prompt">
+            <h4>🔧 Optimized Prompt</h4>
+            <p id="optimized-text"></p>
+          </div>
+
+          <!-- Eco Tip -->
+          <div class="eco-tip">
+            <strong>💡 Tip:</strong> <span id="eco-tip-text">Shorter prompts reduce energy usage and improve efficiency.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Impact Section -->
+  <section class="impact" id="impact">
+    <div class="section-header fade-in">
+      <div class="section-tag">Why It Matters</div>
+      <h2>The Hidden Cost of AI</h2>
+      <p>Every AI interaction has a real-world environmental footprint that most people don't see.</p>
+    </div>
+    <div class="impact-grid">
+      <div class="glass-card impact-card fade-in">
+        <div class="impact-icon">💧</div>
+        <h3>Water Consumption</h3>
+        <p>Data centers use millions of liters of water daily for cooling. A single AI conversation can consume up to 500ml of fresh water.</p>
+      </div>
+      <div class="glass-card impact-card fade-in">
+        <div class="impact-icon">⚡</div>
+        <h3>Energy Demand</h3>
+        <p>Training large AI models requires as much energy as five cars consume over their entire lifetimes. Every query adds to this demand.</p>
+      </div>
+      <div class="glass-card impact-card fade-in">
+        <div class="impact-icon">🌍</div>
+        <h3>Carbon Footprint</h3>
+        <p>AI's global carbon emissions are projected to match the airline industry by 2030. Efficient prompting is one way to help reduce this impact.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Global Stats Section -->
+  <section class="global-stats" id="stats">
+    <div class="section-header fade-in">
+      <div class="section-tag">Your Contribution</div>
+      <h2>Total Resources Saved</h2>
+      <p>Your cumulative savings from optimized prompts this session.</p>
+    </div>
+    <div class="glass-card stats-bar fade-in">
+      <div class="stat-item">
+        <div class="stat-val green" id="stat-water">0.0 ml</div>
+        <div class="stat-label">Water Saved</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-val blue" id="stat-energy">0.0 Wh</div>
+        <div class="stat-label">Energy Saved</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-val cyan" id="stat-co2">0.0 g</div>
+        <div class="stat-label">CO₂ Reduced</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-logo">🌿 Eco AI Tracker</div>
+    <p>Making AI usage more sustainable, one prompt at a time.</p>
+    <div class="footer-links">
+      <a href="#hero">Home</a>
+      <a href="#analyzer">Analyzer</a>
+      <a href="#impact">About</a>
+      <a href="#stats">Stats</a>
+    </div>
+    <p style="margin-top: 18px; font-size: 0.72rem;">© 2026 Eco AI Tracker. Built for a greener future.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
