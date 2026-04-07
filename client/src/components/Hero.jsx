@@ -2,9 +2,6 @@ export default function Hero() {
   return (
     <section className="hero" id="hero">
       <div className="hero-content">
-        <div className="hero-badge">
-          <span className="dot"></span> AI Environmental Intelligence
-        </div>
         <h1>Track Your AI's Environmental Impact</h1>
         <p>
           Every AI prompt consumes water for cooling, electricity for processing,
