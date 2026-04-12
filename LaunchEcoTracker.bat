@@ -1,0 +1,3 @@
+@echo off
+echo Starting Eco AI Tracker...
+npm run dev:desktop
